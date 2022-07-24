@@ -1,11 +1,17 @@
 package com.jason.server.controller;
 
 
-import com.jason.server.pojo.DTO.RespBean;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.jason.server.pojo.Admin;
+import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.service.IAdminService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 /**
  * <p>
@@ -16,11 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-07-18
  */
 @RestController
-@RequestMapping("/server/admin")
+@RequestMapping("/admin")
+@ResponseBody
 public class AdminController {
+    @Autowired
+    private IAdminService adminService;
 
     @GetMapping("/test")
     public RespBean hello() {
+        int i = 0;
         return RespBean.success("success");
+    }
+
+
+    @ApiOperation(value = "获取当前登录用户的信息")
+    @GetMapping("info")
+    public RespBean getAdmin(Principal principal) {
+        if (null == principal) {
+            return RespBean.error();
+        }
+        String username = principal.getName();
+        Admin admin = adminService.getAdminByUsername(username);
+        admin.setPassword(null);
+        return RespBean.success(admin);
     }
 }
