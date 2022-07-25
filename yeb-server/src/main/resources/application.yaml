@@ -29,7 +29,9 @@ logging:
   level:
     com.jason.sercer.mapper: debug
 
-
+spring.mvc.pathmatch:
+  matching-strategy:
+    ANT_PATH_MATCHER
 jwt:
   # Jwt存储的请求头
   tokenHeader: Authorization

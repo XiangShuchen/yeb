@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
 import org.springframework.security.core.Authentication;
@@ -66,12 +67,20 @@ public class SecurityConfig {
                 //配置路由
                 .authorizeRequests(authorize -> authorize
                         //允许登录访问
-                        .antMatchers("/login", "/logout").permitAll()
+                        .antMatchers("/login",
+                                "/logout",
+                                "/css/**",
+                                "/js/**",
+                                "/index.html",
+                                "favicon.ico",
+                                "/doc.html",
+                                "/webjars/**",
+                                "/swagger-resources/**",
+                                "/v2/api-docs/**").permitAll()
                         //其他路由需要验证
                         .anyRequest().authenticated())
                 .build();
     }
-
 }
 
 
