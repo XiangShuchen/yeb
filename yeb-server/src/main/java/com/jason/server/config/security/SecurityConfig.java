@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .headers().cacheControl().disable().and()
                 //配置路由
                 .authorizeRequests(authorize -> authorize
-                        //允许登录访问
+                        //允许访问
                         .antMatchers("/login",
                                 "/logout",
                                 "/css/**",

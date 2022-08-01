@@ -23,12 +23,12 @@ import java.security.Principal;
  */
 @RestController
 @RequestMapping("/admin")
-@ResponseBody
 public class AdminController {
     @Autowired
     private IAdminService adminService;
 
     @GetMapping("/test")
+    @ResponseBody
     public RespBean hello() {
         int i = 0;
         return RespBean.success("success");
