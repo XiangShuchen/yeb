@@ -34,6 +34,13 @@ public class AdminController {
         return RespBean.success("success");
     }
 
+    @GetMapping("/devTest")
+    @ResponseBody
+    public String devTest() {
+        int i = 0;
+        return "devTestSuccess!!!!";
+    }
+
 
     @ApiOperation(value = "获取当前登录用户的信息")
     @GetMapping("info")
