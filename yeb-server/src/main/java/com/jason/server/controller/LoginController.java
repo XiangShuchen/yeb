@@ -25,7 +25,6 @@ public class LoginController {
         return adminService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword(), adminLoginParam.getCode(), request);
     }
 
-
     @ApiOperation("登出")
     @PostMapping("/logout")
     public RespBean logout() {

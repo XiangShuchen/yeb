@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @author jason.Xiang
@@ -21,14 +22,14 @@ import java.io.IOException;
  */
 @Api(tags = "验证码Controller")
 @RestController
-public class kaptchaController {
+public class CaptchaController {
 
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
     @ApiOperation(value = "验证码")
     @GetMapping(value = "/captcha", produces = "image/jpeg")
-    public void captcha(HttpServletRequest request, HttpServletResponse response) {
+    public void captcha(HttpServletRequest request, HttpServletResponse response, String time) {
         //定义response输出类型为image/jpeg
         response.setDateHeader("Expires", 0);
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -41,6 +42,7 @@ public class kaptchaController {
         System.out.println("验证码:  " + text);
         //将验证码放到session中
         request.getSession().setAttribute("captcha", text);
+        request.getSession().setAttribute("captchaTime", LocalDateTime.now().minusMinutes(5));
         //根据文本内容创建图形验证码
         BufferedImage image = defaultKaptcha.createImage(text);
         ServletOutputStream outputStream = null;

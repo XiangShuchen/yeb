@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorize -> authorize
                         //允许访问
                         .antMatchers("/login",
+                                "/captcha",
                                 "/logout",
                                 "/css/**",
                                 "/js/**",
