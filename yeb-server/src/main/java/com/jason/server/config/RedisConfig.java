@@ -1,0 +1,35 @@
+package com.jason.server.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+/**
+ * @author jason.Xiang
+ * @description : redis 配置
+ * @since 2022/9/3-22
+ */
+@Configuration
+public class RedisConfig {
+    @Bean
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory factory){
+
+        RedisTemplate<String,Object> redisTemplate=new RedisTemplate<>();
+
+        // string 类型 key序列器 value序列器
+
+
+
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        //has类型 key序列器 value序列器
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setConnectionFactory(factory);
+
+        return  redisTemplate;
+    }
+}

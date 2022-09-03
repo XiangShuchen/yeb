@@ -18,6 +18,26 @@ spring:
       max-lifetime: 180000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  redis:
+    timeout: 10000ms
+    host: 120.55.69.50
+    port: 6379
+    database: 1 # 选择哪个库，默认0库
+    lettuce:
+      pool:
+        max-active: 1024 # 最大连接数，默认 8
+        max-wait: 10000ms # 最大连接阻塞等待时间，单位毫秒，默认 -1
+        max-idle: 200 # 最大空闲连接，默认 8
+        min-idle: 5
+    # rabbitmq配置
+    rabbitmq:
+      username: guest  # 用户名
+      password: guest       # 密码
+      host: 39.102.65.157     # 服务器地址
+      port: 5672       # 端口
+      publisher-returns: true      # 消息失败回调
+      publisher-confirm-type: correlated    # 消息确认回调
+  # 热部署
   devtools:
     restart:
       enabled: true
@@ -30,6 +50,7 @@ mybatis-plus:
   configuration:
     # 自动驼峰命名
     map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 logging:
   level:
