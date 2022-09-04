@@ -14,5 +14,12 @@
         id
         , name, nameZh
     </sql>
+    <!--根据用户Id查询角色列表-->
+    <select id="getRoles" resultType="role">
+        SELECT r.id,r.`name`,r.nameZh
+        from t_role r
+            LEFT JOIN t_admin_role ar on r.id = ar.rid
+        where ar.adminId = #{adminId};
+    </select>
 
 </mapper>

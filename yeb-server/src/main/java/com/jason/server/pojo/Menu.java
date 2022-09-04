@@ -34,7 +34,7 @@ public class Menu implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "url")
+    @ApiModelProperty(value = "URL_LIST")
     private String url;
 
     @ApiModelProperty(value = "path")
@@ -65,4 +65,7 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "子菜单")
     private List<Menu> children;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "角色列表")
+    private List<Role> roles;
 }

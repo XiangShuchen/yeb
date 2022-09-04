@@ -1,9 +1,11 @@
-package com.jason.server.config.security;
+package com.jason.server.config;
 
+import com.jason.server.config.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -26,6 +29,10 @@ public class SecurityConfig {
     private RestAuthorizationEntryPoint restAuthorizationEntryPoint;
     @Autowired
     private IUserDetailsService userDetailsService;
+    @Autowired
+    private CustomUrlDecisionManager customUrlDecisionManager;
+    @Autowired
+    private CustomFilter customFilter;
 
 
     @Bean
@@ -54,24 +61,22 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 //添加自定义未授权结果返回
                 .userDetailsService(userDetailsService).exceptionHandling().authenticationEntryPoint(restAuthorizationEntryPoint).accessDeniedHandler(restfulAccessDeniedHandler).and()
-                //清除缓存
-                .headers().cacheControl().disable().and()
                 //配置路由
                 .authorizeRequests(authorize -> authorize
-                        //允许访问
-                        .antMatchers("/login",
-                                "/captcha",
-                                "/logout",
-                                "/css/**",
-                                "/js/**",
-                                "/index.html",
-                                "favicon.ico",
-                                "/doc.html",
-                                "/webjars/**",
-                                "/swagger-resources/**",
-                                "/v2/api-docs/**").permitAll()
                         //其他路由需要验证
-                        .anyRequest().authenticated())
+                        .anyRequest()
+                        .authenticated()
+                        .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                            @Override
+                            public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                                object.setAccessDecisionManager(customUrlDecisionManager);
+                                object.setSecurityMetadataSource(customFilter);
+
+                                return object;
+                            }
+                        }))
+                //清除缓存
+                .headers().cacheControl().disable().and()
                 .build();
     }
 }

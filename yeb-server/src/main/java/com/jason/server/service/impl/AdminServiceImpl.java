@@ -58,8 +58,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         if (!StringUtils.hasText(code) || !captcha.equalsIgnoreCase(code)) {
             return RespBean.error().message("验证码输入错误 ，请重新输入");
         }
+
         //登录
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
         if (userDetails == null || passwordEncoder.matches(password, userDetails.getPassword())) {
             return RespBean.error().message("用户名密码不正确");
         }

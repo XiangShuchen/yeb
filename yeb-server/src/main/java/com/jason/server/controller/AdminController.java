@@ -4,6 +4,7 @@ package com.jason.server.controller;
 import com.jason.server.pojo.Admin;
 import com.jason.server.pojo.DTO.BaseDTO.RespBean;
 import com.jason.server.service.IAdminService;
+import com.jason.server.service.IRoleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +27,8 @@ import java.security.Principal;
 public class AdminController {
     @Autowired
     private IAdminService adminService;
-
-    @GetMapping("/test")
-    @ResponseBody
-    public RespBean hello() {
-        int i = 0;
-        return RespBean.success("success");
-    }
+    @Autowired
+    private IRoleService roleService;
 
 
     @ApiOperation(value = "获取当前登录用户的信息")
@@ -43,6 +39,7 @@ public class AdminController {
         }
         String username = principal.getName();
         Admin admin = adminService.getAdminByUsername(username);
+        admin.setRoles(roleService.getRoles(admin.getId()));
         admin.setPassword(null);
         return RespBean.success(admin);
     }
