@@ -125,7 +125,6 @@ public class JwtTokenUtil {
 
     /**
      * 生成token失效时间
-     *
      * @return
      */
     private Date generateExpirationDate() {

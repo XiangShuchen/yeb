@@ -6,7 +6,7 @@ import com.jason.server.config.security.IUserDetailsService;
 import com.jason.server.config.security.JwtTokenUtil;
 import com.jason.server.mapper.AdminMapper;
 import com.jason.server.pojo.Admin;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import com.jason.server.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

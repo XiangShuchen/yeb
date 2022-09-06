@@ -2,7 +2,7 @@ package com.jason.server.config.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

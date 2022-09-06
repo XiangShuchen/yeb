@@ -1,6 +1,6 @@
 package com.jason.server.controller;
 
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
