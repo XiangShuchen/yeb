@@ -3,6 +3,7 @@ package com.jason.server.config.security;
 import com.jason.server.pojo.Menu;
 import com.jason.server.pojo.Role;
 import com.jason.server.service.IMenuService;
+import com.jason.server.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -38,6 +39,10 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
             if (antPathMatcher.match(menu.getUrl(),requestUrl)) {
                 String[] roles = menu.getRoles().stream().map(Role::getName).toArray(String[]::new);
                 return SecurityConfig.createList(roles);
+            }
+            if (Const.URL_LIST.stream().anyMatch(s -> antPathMatcher.match(s,requestUrl)))
+            {
+                return SecurityConfig.createList(Const.RESOURCES_URL);
             }
         }
         //如果没有匹配上 默认登录访问

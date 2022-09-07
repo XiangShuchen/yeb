@@ -1,6 +1,7 @@
 package com.jason.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jason.server.pojo.DTO.BaseDTO.RespBean;
 import com.jason.server.pojo.Position;
 
 /**
@@ -13,4 +14,7 @@ import com.jason.server.pojo.Position;
  */
 public interface IPositionService extends IService<Position> {
 
+    RespBean updatePosition(Position position);
+
+    RespBean addPosition(Position position);
 }

@@ -56,17 +56,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public RespBean login(String username, String password, String code, HttpServletRequest request) {
         String captcha = (String) request.getSession().getAttribute("captcha");
         if (!StringUtils.hasText(code) || !captcha.equalsIgnoreCase(code)) {
-            return RespBean.error().message("验证码输入错误 ，请重新输入");
+            return RespBean.error("验证码输入错误 ，请重新输入");
         }
 
         //登录
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (userDetails == null || passwordEncoder.matches(password, userDetails.getPassword())) {
-            return RespBean.error().message("用户名密码不正确");
+            return RespBean.error("用户名密码不正确");
         }
         if (!userDetails.isEnabled()) {
-            return RespBean.error().message("该账户被禁用");
+            return RespBean.error("该账户被禁用");
         }
         //更新 登录对象
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -7,16 +7,18 @@ import java.util.stream.Stream;
 public class Const {
 
     public static final List<String> URL_LIST = Stream.of("/login",
-            "/captcha",
+            "/captcha?**",
             "/logout",
-            "/css/",
-            "/js/",
-            "/index.html",
             "/favicon.ico",
+            "/index.html",
             "/doc.html",
-            "/webjars/",
-            "/swagger-resources/",
-            "/v2/api-docs/").collect(Collectors.toList());
+            "/css/**",
+            "/js/**",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/v2/api-docs/**").collect(Collectors.toList());
+
+    public static final String RESOURCES_URL = "resources";
 
     public static final String ROLE_MENU = "menuWithRole";
 }

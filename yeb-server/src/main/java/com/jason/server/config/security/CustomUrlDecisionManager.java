@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -24,18 +23,14 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        //获取请求的url
-        String requestUrl = ((FilterInvocation) object).getRequestUrl();
         for (ConfigAttribute configAttribute : configAttributes) {
             //获取当前URL所需角色
             String needRole = configAttribute.getAttribute();
             // 判断角色是否登录即可访问的角色，此角色在CustomFilter 中设置
-            if ("ROLE_LOGIN".equals(needRole)) {
-                if (Const.URL_LIST.stream().noneMatch(s -> s.indexOf(requestUrl) >=0 || requestUrl.indexOf(s) >=0) && authentication instanceof AnonymousAuthenticationToken) {
+            if ("ROLE_LOGIN".equals(needRole) && authentication instanceof AnonymousAuthenticationToken) {
                     throw new AccessDeniedException("尚未登录，请重新登录");
-                } else {
-                    return;
-                }
+            } else if (Const.RESOURCES_URL.equals(needRole)) {
+                return;
             } else {
                 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
                 for (GrantedAuthority authority : authorities) {
