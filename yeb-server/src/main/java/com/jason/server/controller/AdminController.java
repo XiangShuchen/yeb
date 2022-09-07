@@ -40,6 +40,6 @@ public class AdminController {
         Admin admin = adminService.getAdminByUsername(username);
         admin.setRoles(roleService.getRoles(admin.getId()));
         admin.setPassword(null);
-        return RespBean.success(admin);
+        return RespBean.success().obj(admin);
     }
 }

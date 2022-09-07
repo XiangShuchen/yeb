@@ -1,7 +1,7 @@
 package com.jason.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import com.jason.server.pojo.Position;
 
 /**

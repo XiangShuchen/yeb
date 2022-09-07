@@ -1,6 +1,7 @@
 package com.jason.server.exception;
 
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+
+import com.jason.server.RespBean;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,8 +19,8 @@ public class GlobalException {
     @ExceptionHandler(SQLException.class)
     public RespBean mysqlException(SQLException e){
         if (e instanceof SQLIntegrityConstraintViolationException) {
-            return RespBean.error("该数据有关联数据，操作失败");
+            return RespBean.error().message("该数据有关联数据，操作失败");
         }
-        return RespBean.error("数据库异常");
+        return RespBean.error().message("数据库异常");
     }
 }

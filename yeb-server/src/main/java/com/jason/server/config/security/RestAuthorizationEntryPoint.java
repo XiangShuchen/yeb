@@ -22,7 +22,7 @@ public class RestAuthorizationEntryPoint implements AuthenticationEntryPoint {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        RespBean error = RespBean.error(401).message("未登录，请登录");
+        RespBean error = RespBean.error().code(401).message("未登录，请登录");
         out.write(new ObjectMapper().writeValueAsString(error));
         out.flush();
         out.close();

@@ -1,7 +1,7 @@
 package com.jason.server.controller;
 
 
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import com.jason.server.pojo.Position;
 import com.jason.server.service.IPositionService;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +29,7 @@ public class PositionController {
     @ApiOperation(value = "获取所有职位信息")
     @GetMapping("/")
     public RespBean getAllPOPosition(){
-        return RespBean.success(positionService.list());
+        return RespBean.success().obj(positionService.list());
     }
 
     @ApiOperation(value = "添加职位信息")
@@ -48,12 +48,12 @@ public class PositionController {
     @ApiOperation(value = "删除职位信息")
     @DeleteMapping("/{id}")
     public RespBean deletePosition(@PathVariable String id){
-        return positionService.removeById(id)?RespBean.success("删除成功"):RespBean.error("删除失败");
+        return positionService.removeById(id)?RespBean.success().message("删除成功"):RespBean.error().message("删除失败");
     }
 
     @ApiOperation(value = "批量删除职位信息")
     @DeleteMapping("/")
     public RespBean deletePositions(List<Integer> ids){
-        return positionService.removeByIds(ids)?RespBean.success("删除成功"):RespBean.error("删除失败");
+        return positionService.removeByIds(ids)?RespBean.success().message("删除成功"):RespBean.error().message("删除失败");
     }
 }

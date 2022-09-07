@@ -28,6 +28,6 @@ public class LoginController {
     @ApiOperation("登出")
     @PostMapping("/logout")
     public RespBean logout() {
-        return RespBean.success("注销成功");
+        return RespBean.success().message("注销成功");
     }
 }

@@ -1,8 +1,8 @@
 package com.jason.server.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jason.server.RespBean;
 import com.jason.server.mapper.PositionMapper;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
 import com.jason.server.pojo.Position;
 import com.jason.server.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ public class PositionServiceImpl extends ServiceImpl<PositionMapper, Position> i
             Position checkDate = positionMapper.selectById(position.getId());
             if (checkDate != null) {
                 return positionMapper.updateById(position) == 1 ?
-                        RespBean.success("修改成功") : RespBean.error("修改失败");
+                        RespBean.success().message("修改成功") : RespBean.error().message("修改失败");
             } else
-                return RespBean.error("没有该职位");
+                return RespBean.error().message("没有该职位");
         }
         else return RespBean.error();
     }
@@ -49,9 +49,9 @@ public class PositionServiceImpl extends ServiceImpl<PositionMapper, Position> i
         if (position!=null) {
             Position checkDate = positionMapper.selectById(position.getId());
             if (checkDate ==null) {
-                return positionMapper.insert(position)==1 ?RespBean.success("保存成功") :RespBean.error("保存失败");
+                return positionMapper.insert(position)==1 ?RespBean.success().message("保存成功") :RespBean.error().message("保存失败");
             } else {
-             return RespBean.error("职位名称重复");
+             return RespBean.error().message("职位名称重复");
             }
 
         } else return RespBean.error();
