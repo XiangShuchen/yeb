@@ -3,12 +3,14 @@ package com.jason.server.pojo.DTO.BaseDTO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.http.HttpStatus;
 
 @Data
 @Builder
 @EqualsAndHashCode
 public class RespBean {
     private long code;
+    private boolean success;
     private String message;
     private Object obj;
 
@@ -17,19 +19,28 @@ public class RespBean {
         this.message = message;
         this.obj = obj;
     }
+    private RespBean(long code, boolean success,String message, Object obj) {
+        this.code = code;
+        this.success = success;
+        this.message = message;
+        this.obj = obj;
+    }
 
     private RespBean() {
     }
 
     public static RespBean success() {
+        return new RespBean(HttpStatus.OK.value(),true, null, null);
         return success(200, null);
     }
 
     public static RespBean success(String message) {
+        return new RespBean(HttpStatus.OK.value(),true, message, null);
         return success(200, message);
     }
 
     public static RespBean success(Object obj) {
+        return new RespBean(HttpStatus.OK.value(), true,"操作成功", obj);
         return success(200, "操作成功", obj);
     }
 
@@ -45,10 +56,12 @@ public class RespBean {
 
 
     public static RespBean error() {
+        return new RespBean(HttpStatus.INTERNAL_SERVER_ERROR.value(), false,null, null);
         return error(500, null);
     }
 
     public static RespBean error(long code) {
+        return new RespBean(code, false,null, null);
         return error(code, null);
     }
 

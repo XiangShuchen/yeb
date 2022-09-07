@@ -1,7 +1,7 @@
 package com.jason.server.controller;
 
 import com.jason.server.pojo.DTO.AdminLoginParam;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import com.jason.server.service.IAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

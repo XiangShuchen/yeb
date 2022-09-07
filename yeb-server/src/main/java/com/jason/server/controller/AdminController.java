@@ -2,14 +2,13 @@ package com.jason.server.controller;
 
 
 import com.jason.server.pojo.Admin;
-import com.jason.server.pojo.DTO.BaseDTO.RespBean;
+import com.jason.server.RespBean;
 import com.jason.server.service.IAdminService;
 import com.jason.server.service.IRoleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
