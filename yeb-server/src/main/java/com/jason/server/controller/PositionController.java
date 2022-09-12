@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -53,7 +53,7 @@ public class PositionController {
 
     @ApiOperation(value = "批量删除职位信息")
     @DeleteMapping("/")
-    public RespBean deletePositions(List<Integer> ids){
-        return positionService.removeByIds(ids)?RespBean.success().message("删除成功"):RespBean.error().message("删除失败");
+    public RespBean deletePositions(Integer[] ids){
+        return positionService.removeByIds(Arrays.asList(ids))?RespBean.success().message("删除成功"):RespBean.error().message("删除失败");
     }
 }

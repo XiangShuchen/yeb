@@ -34,13 +34,14 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
         //获取请求的url
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
         List<Menu> menusWithRole = menuService.getMenusWithRole();
+        List<String> urlList = Const.URL_LIST;
         for (Menu menu : menusWithRole) {
             // 判断请求的URl与菜单角色是否匹配
             if (antPathMatcher.match(menu.getUrl(),requestUrl)) {
                 String[] roles = menu.getRoles().stream().map(Role::getName).toArray(String[]::new);
                 return SecurityConfig.createList(roles);
             }
-            if (Const.URL_LIST.stream().anyMatch(s -> antPathMatcher.match(s,requestUrl)))
+            if (urlList.stream().anyMatch(s -> antPathMatcher.match(s,requestUrl) || requestUrl.startsWith(s)))
             {
                 return SecurityConfig.createList(Const.RESOURCES_URL);
             }

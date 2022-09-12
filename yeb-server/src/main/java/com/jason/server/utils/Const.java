@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 public class Const {
 
     public static final List<String> URL_LIST = Stream.of("/login",
-            "/captcha?**",
+            "/captcha",
+            "/admin/**",
             "/logout",
             "/favicon.ico",
             "/index.html",
